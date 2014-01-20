@@ -1,0 +1,4 @@
+JBOSS-CLI TIPS
+===============
+
+jboss-cli.sh --connect --controller=hostname:port 
