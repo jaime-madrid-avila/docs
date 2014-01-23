@@ -1,0 +1,135 @@
+TIPS MYSQL 
+
+
+# manual 
+
+http://dev.mysql.com/doc/refman/5.1/en/installing.html
+
+# tuning 
+
+http://www.genericarticles.com/mediawiki/index.php?title=Performance_Tuning
+
+mysql -u mysql -pUe0uujai
+
+# show all configs ... 
+mysql -u mysql -pUe0uujai INFORMATION_SCHEMA -tBe "SELECT * FROM GLOBAL_VARIABLES"
+mysql -u mysql -pUe0uujai INFORMATION_SCHEMA -tBe "SELECT * FROM GLOBAL_VARIABLES" | sed 's,\t,^=,'
+
+
+# creer archive my.cnf a partir de la conf actuelle:
+
+mysql -u mysql -pUe0uujai INFORMATION_SCHEMA -NBe "show variables" | sed 's,\t,^=,' | column -ts^
+
+mysql -u mysql -pUe0uujai INFORMATION_SCHEMA -NBe "show variables" | sed 's,\t,^=,' | column -ts^ | tr "\n" '@' | eval $(echo "sed '" "s,@\("{a..z}"\),\n\n\1,;" "'") |tr '@' "\n" | sed 's,^,# ,g'
+
+
+
+
+log
+
+
+# add vars to profile
+
+MYSQL_BASE=/opt/mysql
+MYSQL_HOME=/opt/mysql/5.1.42
+export MYSQL_BASE MYSQL_HOME
+
+# modifier l'emplacement du my.cnf
+my.cnf =>  $MYSQL_HOME/my.cnf
+
+
+
+MOCA
+
+# MySQL Directory Organization 
+A good way to separate MySQL files and software:
+•    /opt/mysql/5.1.42             - Symbolic link to software directory location
+•    /db01/mysql01/data          - Data directory for MySQL
+•    /db01/mysql01/binlogs     - Binary log files location
+•    /db01/mysql01/admin       - Administration files location
+•    /db01/mysql01/backups    - Backup files location
+•    /db01/mysql01/innodata    - InnoDB shared location
+•    /db01/mysql01/innologs   - InnoDB transaction logs location
+
+
+# N instances 
+
+http://dev.mysql.com/doc/refman/5.0/en/multiple-servers.html
+http://dev.mysql.com/doc/refman/5.0/es/multiple-servers.html
+
+
+[ MY.CNF ]
+
+# The MySQL server
+[mysqld]
+
+port            = 3306
+
+# basedir                                  =/usr/
+
+# datadir                                  =/var/lib/mysql/
+datadir                                  =/dbfs/mysql
+
+# pid_file                                 =/var/run/mysqld/mysqld.pid
+pid_file                                 =/dbfs/mysql/mysqld.pid
+
+# socket                                   =/var/lib/mysql/mysql.sock
+socket                                   =/dbfs/mysql/mysql.sock
+
+# tmpdir                                   =/envtmp/
+
+# Security variables
+# skip_name_resolve                        =OFF
+
+# MySQL error log
+# log_error                                =/exploit/log/MYS/mysqld.log
+log_error                                =/dbdump/mysql/mysqld_error.log
+
+
+# General Query Log
+# general_log                              =OFF
+# general_log_file                         =/var/run/mysqld/mysqld.log
+# general_log_file =  /dbdump/mysql/general_query.log
+
+# Slow queries
+# log_slow_queries                         =OFF
+# slow_query_log_file                      =/var/run/mysqld/mysqld-slow.log
+# slow_query_log_file                      =/dbdump/mysql/slow_query.log
+# long_query_time                          =10.000000
+
+
+# MyISAM variables
+
+# key_buffer_size                          =8384512   # 25 - 33 % RAM
+
+# InnoDB variables
+
+# innodb_data_home_dir                     =/dbfs/mysql
+# innodb_log_group_home_dir                =./
+# innodb_data_file_path 
+
+
+
+# Query Cache
+# query_cache_type                         =ON
+# query_cache_size                         =0
+
+
+# voir si l'on ajoute un repertoire pour l'instance ?   /dbfs/mysql/<instance>/
+
+
+# configs types : 
+http://www.bigdbahead.com/?p=115
+
+
+
+
+# creer, demarrer, login, arreter
+
+mysql_install_db --user=mysql --datadir=/dbfs/mysql
+mysqld_safe --defaults-file=/dbfs/mysql/my.cnf &
+
+mysql -S /dbfs/mysql/mysql.sock
+mysql -h 127.0.0.1 -P 3306 -p
+
+mysqladmin -S /dbfs/mysql/mysql.sock shutdown
