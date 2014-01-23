@@ -4,3 +4,7 @@ JBOSS-CLI TIPS
 jboss-cli.sh --connect --controller=hostname:port
 
 jboss-cli.sh --connect --controller=hostname:port 'ls -l /subsystem'
+
+
+
+voici un modif
