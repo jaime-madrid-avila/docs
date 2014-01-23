@@ -1,0 +1,20 @@
+Mail TIPS 
+
+uuencode in.txt in.txt | mail -s "message" jmadridpro@gmail.com
+
+
+
+# MUTT 
+
+mutt -s "Test Email" john@tecmint.com
+
+mutt  -s "Subject of Mail" -a <path of  attachment file> -c <email address of CC>  mail address of recipient
+
+mutt -s "Site Backup" -a /backups/backup.tar  -c tarunika@centos58server.example.com root@centos58server.example.com
+
+http://www.tecmint.com/send-mail-from-command-line-using-mutt-command/
+
+
+# MAILX
+
+cat ~oracle/.sh_history |    mailx -s "DBA Command Report" don@buleson.cc
