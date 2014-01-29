@@ -1,0 +1,21 @@
+CentOS 6.5 TIPS
+---------------
+
+
+To change temporary (until reboot)
+
+Run the following command
+# loadkeys be-latin1
+
+Permanent setting:
+Edit /etc/sysconfig/keyboard and
+replace KEYTABLE="us" by KEYTABLE="be-latin1"
+save and reboot
+
+yum search gnome-desktop
+XXXX yum install gnome-desktop
+
+yum grouplist
+yum groupinstall Desktop
+
+http://blog.inticol.com/
