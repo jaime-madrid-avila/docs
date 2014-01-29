@@ -19,3 +19,5 @@ yum grouplist
 yum groupinstall Desktop
 
 http://blog.inticol.com/
+
+voici un test 
