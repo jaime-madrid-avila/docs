@@ -19,3 +19,40 @@ yum grouplist
 yum groupinstall Desktop
 
 http://blog.inticol.com/
+
+NETWORK 
+
+Pb apres clonage de virtualbox 
+
+ip link show
+ip link set dev eth1 name eth0
+
+service network restart !
+
+
+CDROM 
+
+mkdir /media/cdrom 
+mount -t /dev/cdrom /media/cdrom/
+
+
+VirtualBoxLinuxAddtions
+
+yum install kernel-devel-2.6.32-431.3.1.el6.x86_64
+yum install gcc kernel kernel-devel kernel-headers dkms make bzip2 perl
+
+# OPENGL bug
+ln -s /usr/include/drm/drm.h
+ln -s /usr/include/drm/drm_sarea.h
+ln -s /usr/include/drm/drm_mode.h
+ln -s /usr/include/drm/drm_fourcc.h
+
+
+./VBoxLinuxAdditions.run
+
+
+
+
+
+
+http://www.if-not-true-then-false.com/2010/install-virtualbox-guest-additions-on-fedora-centos-red-hat-rhel/
