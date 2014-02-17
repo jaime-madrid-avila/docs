@@ -1,0 +1,5 @@
+
+
+#Reload listener setting 
+
+lsnrctl reload LISTENER_9208
